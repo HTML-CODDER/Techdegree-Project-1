@@ -1,0 +1,5 @@
+const { agnes } = require('ml-hclust');
+
+const tree = agnes(data, {
+  method: 'ward',
+});
