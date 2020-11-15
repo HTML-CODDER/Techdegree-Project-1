@@ -1,0 +1,5 @@
+options = {
+    'outtmpl': output,
+    'external_downloader': EXTERNAL_DL
+    # ,'verbose': True
+}
