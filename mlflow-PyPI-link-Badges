@@ -1,1 +1,48 @@
 [![Downloads](https://pepy.tech/badge/mlflow)](https://pepy.tech/project/mlflow)
+
+client = mlflow.tracking.MlflowClient()
+data = client.get_run(mlflow.active_run().info.run_id).data
+
+with mlflow.start_run():
+    mlflow.log_param("x", 1)
+    mlflow.log_metric("y", 2)
+    ...
+    
+    with mlflow.start_run():
+    for epoch in range(0, 3):
+        mlflow.log_metric(key="quality", value=2*epoch, step=epoch)
+        
+        MlflowClient client = new MlflowClient();
+RunInfo run = client.createRun();
+for (int epoch = 0; epoch < 3; epoch ++) {
+    client.logMetric(run.getRunId(), "quality", 2 * epoch, System.currentTimeMillis(), epoch);
+}
+- Parent run
+  - Child run 1
+  - Child run 2
+  - ...
+  
+  export MLFLOW_EXPERIMENT_NAME=fraud-detection
+
+mlflow experiments create --experiment-name fraud-detection
+# Launch a run. The experiment is inferred from the MLFLOW_EXPERIMENT_NAME environment
+# variable, or from the --experiment-name parameter passed to the MLflow CLI (the latter
+# taking precedence)
+with mlflow.start_run():
+    mlflow.log_param("a", 1)
+    mlflow.log_metric("b", 2)
+
+from  mlflow.tracking import MlflowClient
+client = MlflowClient()
+experiments = client.list_experiments() # returns a list of mlflow.entities.Experiment
+run = client.create_run(experiments[0].experiment_id) # returns mlflow.entities.Run
+client.log_param(run.info.run_id, "hello", "world")
+client.set_terminated(run.info.run_id)
+
+client.set_tag(run.info.run_id, "tag_key", "tag_value")
+
+mlflow server \
+    --backend-store-uri /mnt/persistent-disk \
+    --default-artifact-root s3://my-mlflow-bucket/ \
+    --host 0.0.0.0
+
